@@ -6,11 +6,16 @@ author:             Richard Wallace <rwallace@atlassian.com>
 maintainer:         Richard Wallace <rwallace@atlassian.com>
 copyright:          (c) 2015 Richard Wallace
 synopsis:           A library for building HipChat Bots
+description:        A library for building HipChat Bots
 category:           Web
 homepage:           https://bitbucket.org/rwallace/hipbot
 bug-reports:        https://bitbucket.org/rwallace/hipbot/issues
 cabal-version:      >= 1.8
 build-type:         Simple
+
+source-repository   head
+  type:             git
+  location:         https://github.com/purefn/hipbot.git
 
 library
   ghc-options:      -Wall
