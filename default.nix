@@ -1,18 +1,18 @@
-{ mkDerivation, aeson, base, blaze-builder, bytestring
-, clientsession, either, exceptions, http-client, http-types, jwt
-, lens, lucid, mtl, network-uri, stdenv, stm, text, transformers
-, unordered-containers, utf8-string, wai, wai-extra, wai-lens, warp
-, webcrank-wai, wreq
+{ mkDerivation, aeson, base, bifunctors, blaze-builder, bytestring
+, either, exceptions, http-client, http-client-tls, http-types, jwt
+, lens, mtl, network-uri, stdenv, stm, text, time, transformers
+, unordered-containers, utf8-string, wai, wai-lens, webcrank-wai
+, wreq
 }:
 mkDerivation {
   pname = "hipbot";
   version = "0.1";
   src = ./.;
   buildDepends = [
-    aeson base blaze-builder bytestring clientsession either exceptions
-    http-client http-types jwt lens lucid mtl network-uri stm text
-    transformers unordered-containers utf8-string wai wai-extra
-    wai-lens warp webcrank-wai wreq
+    aeson base bifunctors blaze-builder bytestring either exceptions
+    http-client http-client-tls http-types jwt lens mtl network-uri stm
+    text time transformers unordered-containers utf8-string wai
+    wai-lens webcrank-wai wreq
   ];
   homepage = "https://bitbucket.org/rwallace/hipbot";
   description = "A library for building HipChat Bots";
