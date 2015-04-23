@@ -6,7 +6,7 @@
 }:
 mkDerivation {
   pname = "hipbot";
-  version = "0.1";
+  version = "0.3";
   src = ./.;
   buildDepends = [
     aeson base bifunctors blaze-builder bytestring either exceptions
