@@ -35,6 +35,9 @@ data OAuthError
   | ParseAccessTokenError Registration AbsoluteURI Wreq.JSONError
   | InvalidOAuthCreds Registration
 
+instance Show OAuthError where
+  show = showOAuthError
+
 showOAuthError :: OAuthError -> String
 showOAuthError = \case
   MissingAccessTokenUrl r -> mconcat
@@ -138,7 +141,20 @@ instance A.FromJSON HCAccessToken where
     <*> o .: "expires_in"
 
 resolveExpiresIn :: HCAccessToken -> IO AccessToken
-resolveExpiresIn t = resolve <$> getCurrentTime where
-  resolve = AccessToken (_hcAccessToken t) . addUTCTime diff
-  diff = realToFrac . _hcExpiresIn $ t
+resolveExpiresIn t = do
+  now <- getCurrentTime
+  let
+    diff = realToFrac . _hcExpiresIn $ t
+    expiring = addUTCTime diff now
+  -- TODO get rid of this once confident the timing is right
+  print $ mconcat
+    [ "OAuthToken: expires_in="
+    , show (_hcExpiresIn t)
+    , ", now="
+    , show now
+    , ", expiring="
+    , show expiring
+    ]
+  return $ AccessToken (_hcAccessToken t) expiring
+
 

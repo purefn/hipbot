@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -23,12 +24,13 @@ import Data.String
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Time.Clock
+import Data.Typeable
 import Network.HTTP.Types
 import Network.URI (URI)
 import qualified Network.URI as URI
 
 newtype AbsoluteURI = AbsoluteURI URI
-  deriving Eq
+  deriving (Eq, Typeable)
 
 parseAbsoluteURI :: String -> Maybe AbsoluteURI
 parseAbsoluteURI = fmap AbsoluteURI . URI.parseAbsoluteURI
