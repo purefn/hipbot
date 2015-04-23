@@ -8,8 +8,8 @@ copyright:          (c) 2015 Richard Wallace
 synopsis:           A library for building HipChat Bots
 description:        A library for building HipChat Bots
 category:           Web
-homepage:           https://bitbucket.org/rwallace/hipbot
-bug-reports:        https://bitbucket.org/rwallace/hipbot/issues
+homepage:           https://github.com/purefn/hipbot
+bug-reports:        https://github.com/purefn/hipbot/issues
 cabal-version:      >= 1.8
 build-type:         Simple
 
