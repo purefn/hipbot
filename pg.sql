@@ -5,5 +5,5 @@ CREATE TABLE hipbot (
   groupId                  integer NOT NULL,
   oauthSecret              char(40) NOT NULL,
   accessToken              char(40) NOT NULL,
-  accessTokenExpires       timestamp NOT NULL
+  accessTokenExpires       timestamptz NOT NULL
 );
