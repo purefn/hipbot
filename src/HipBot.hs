@@ -108,13 +108,6 @@ getToken bot oid = lookupReg >>= fetch where
     oid
   fetch (reg, tok) = do
     now <- liftIO getCurrentTime
-    -- TODO get rid of this once confident the check is correct
-    liftIO $ print $ mconcat
-      [ "OAuthToken: expires="
-      , show $ tok ^. expires
-      , ", now="
-      , show now
-      ]
     if addUTCTime 300 now < tok ^. expires
       then right (reg, tok)
       else updatedToken bot reg <&> (reg,)

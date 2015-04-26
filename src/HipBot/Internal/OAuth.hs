@@ -141,20 +141,11 @@ instance A.FromJSON HCAccessToken where
     <*> o .: "expires_in"
 
 resolveExpiresIn :: HCAccessToken -> IO AccessToken
-resolveExpiresIn t = do
-  now <- getCurrentTime
+resolveExpiresIn t =
   let
     diff = realToFrac . _hcExpiresIn $ t
-    expiring = addUTCTime diff now
-  -- TODO get rid of this once confident the timing is right
-  print $ mconcat
-    [ "OAuthToken: expires_in="
-    , show (_hcExpiresIn t)
-    , ", now="
-    , show now
-    , ", expiring="
-    , show expiring
-    ]
-  return $ AccessToken (_hcAccessToken t) expiring
+    expiring = addUTCTime diff
+  in
+    AccessToken (_hcAccessToken t) . expiring <$> getCurrentTime
 
 
