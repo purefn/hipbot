@@ -32,7 +32,7 @@ hipBotResources
   => HipBot m
   -> Dispatcher (WaiResource m)
 hipBotResources bot = mconcat
-  [ root ==> resourceWithJson' (botAddOn bot)
+  [ root ==> resourceWithJson' (bot ^. addOn)
   , "installations" ==> installationsResource bot
   , "installations" </> param ==> installationResource bot
   ]
@@ -68,7 +68,10 @@ installationResource
   -> WaiResource m
 installationResource bot oid = resource
   { allowedMethods = return [methodDelete]
-  , deleteResource = (True <$) . lift . lift . apiDeleteRegistration (bot ^. hipBotAPI) $ oid
+  , deleteResource = lift . lift $ do
+      bot ^. onUninstall . to ($ oid)
+      apiDeleteRegistration (bot ^. hipBotAPI) oid
+      return True
   }
 
 configResource

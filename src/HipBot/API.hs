@@ -6,7 +6,6 @@
 
 module HipBot.API
   ( HipBotAPI(..)
-  , HasHipBotAPI(hipBotAPI)
   , stmAPI
   , pgAPI
   ) where
@@ -32,8 +31,6 @@ data HipBotAPI m = HipBotAPI
   , apiLookupRegistration :: OAuthId -> m (Maybe (Registration, AccessToken))
   , apiUpdateAccessToken :: OAuthId -> AccessToken -> m ()
   }
-
-makeClassy ''HipBotAPI
 
 stmAPI :: MonadIO m => IO (HipBotAPI m)
 stmAPI = do

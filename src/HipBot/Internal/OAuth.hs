@@ -125,7 +125,7 @@ fetchAccessToken bot reg turl = EitherT . handleErr $ fetch where
     [ "grant_type" .= A.String "client_credentials"
     , "scope" .= unwords (show <$> capScopes)
     ]
-  capScopes = botAddOn bot ^. capabilities . folded . hipchatApiConsumer . folded . scopes
+  capScopes = bot ^. addOn . capabilities . folded . hipchatApiConsumer . folded . scopes
   handleErr =
     handle (return . Left . FetchAccessTokenError reg turl) .
     handle (return . Left . ParseAccessTokenError reg turl)

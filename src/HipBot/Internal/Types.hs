@@ -54,7 +54,7 @@ instance Show AbsoluteURI where
 
 instance IsString AbsoluteURI where
   fromString s =
-    fromMaybe (error $ "Not an absolute URI: " ++ s) (parseAbsoluteURI s)
+    fromMaybe (error $ "Not an absolute URI: " <> s) (parseAbsoluteURI s)
 
 instance A.ToJSON AbsoluteURI where
   toJSON = A.toJSON . show
@@ -72,13 +72,13 @@ data AddOn = AddOn
   , _addOnVendor :: Maybe Vendor
   } deriving (Show, Eq)
 
-addOn
+defaultAddOn
   :: Text -- ^ key
   -> Text -- ^ name
   -> Text -- ^ description
   -> Links
   -> AddOn
-addOn k n d ls = AddOn k n d ls Nothing Nothing
+defaultAddOn k n d ls = AddOn k n d ls Nothing Nothing
 
 data Links = Links
   { _linksSelf :: AbsoluteURI
@@ -189,7 +189,7 @@ instance A.FromJSON APIScope where
     "send_notification" -> return SendNotification
     "view_group" -> return ViewGroup
     "view_messages" -> return ViewMessages
-    s -> fail $ "unexpected API scope " ++ T.unpack s
+    s -> fail $ "unexpected API scope " <> T.unpack s
 
 data Webhook = Webhook
   { _webhookUrl :: AbsoluteURI
@@ -220,7 +220,7 @@ instance A.FromJSON RoomEvent where
     "room_exit" -> return RoomExit
     "room_enter" -> return RoomEnter
     "room_topic_change" -> return RoomTopicChange
-    s -> fail $ "unexpected room event" ++ T.unpack s
+    s -> fail $ "unexpected room event" <> T.unpack s
 
 data Configurable = Configurable
   { _configurableUrl :: AbsoluteURI
