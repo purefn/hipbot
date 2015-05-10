@@ -11,8 +11,6 @@ env:
 
 matrix:
   allow_failures:
-    # wreq fails to build on 7.10.1 https://github.com/bos/wreq/issues/61
-   - env: CABALVER=1.22 GHCVER=7.10.1
    - env: CABALVER=head GHCVER=head
 
 # Note: the distinction between `before_install` and `install` is not important.
