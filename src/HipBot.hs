@@ -34,6 +34,7 @@ import Data.Time.Clock.POSIX
 import Network.HTTP.Client
 import Network.HTTP.Types
 import qualified Network.Wreq as Wreq
+import Prelude
 import Safe
 
 import HipBot.API

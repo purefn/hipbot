@@ -54,6 +54,7 @@ library
                   , mtl                             >=2.0.1 && <2.3
                   , network-uri                     >=2.4 && <3
                   , postgresql-simple               >=0.4 && <1
+                  , resource-pool                   >=0.2 && <1
                   , safe                            >=0.2 && <1
                   , stm                             >=2.3 && <3
                   , text                            >=0.11 && <1.3

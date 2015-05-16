@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -22,6 +23,7 @@ import Data.Time.Clock
 import Network.HTTP.Client (HttpException)
 import Network.HTTP.Types
 import qualified Network.Wreq as Wreq
+import Prelude
 
 import HipBot.API
 import HipBot.Internal.HipBot

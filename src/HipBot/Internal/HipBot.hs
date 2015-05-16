@@ -10,6 +10,7 @@ import Control.Lens
 import qualified Network.HTTP.Client as HTTP
 import Network.HTTP.Client.TLS
 import qualified Network.Wreq as Wreq
+import Prelude
 
 import HipBot.API
 import HipBot.Internal.Types

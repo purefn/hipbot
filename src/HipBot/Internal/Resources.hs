@@ -19,6 +19,7 @@ import qualified Data.Text.Encoding as T
 import Network.HTTP.Types
 import Network.Wai (lazyRequestBody)
 import Network.Wai.Lens
+import Prelude
 import qualified Web.JWT as JWT
 import Webcrank.Wai
 

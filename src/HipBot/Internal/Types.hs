@@ -28,6 +28,7 @@ import Data.Typeable
 import Network.HTTP.Types
 import Network.URI (URI)
 import qualified Network.URI as URI
+import Prelude
 
 newtype AbsoluteURI = AbsoluteURI URI
   deriving (Eq, Typeable)
