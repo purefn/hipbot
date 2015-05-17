@@ -6,7 +6,7 @@
 }:
 mkDerivation {
   pname = "hipbot";
-  version = "0.3";
+  version = "0.3.0.1";
   src = builtins.filterSource (path: type: baseNameOf path != ".git" && baseNameOf path != "dist") ./.;
   buildDepends = [
     aeson base bifunctors blaze-builder bytestring either exceptions

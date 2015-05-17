@@ -252,6 +252,7 @@ data AccessToken = AccessToken
 data Notification
   = TextNotification Text
   | HtmlNotification Text
+  deriving Show
 
 makeFields ''AddOn
 makeFields ''Links
