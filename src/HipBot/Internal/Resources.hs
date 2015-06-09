@@ -26,7 +26,7 @@ import Webcrank.Wai
 import HipBot.API
 import HipBot.Internal.HipBot
 import HipBot.Internal.OAuth
-import HipBot.Internal.Types
+import HipBot.Descriptor
 
 hipBotResources
   :: (Applicative m, MonadCatch m, MonadIO m)

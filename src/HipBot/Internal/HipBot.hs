@@ -13,6 +13,7 @@ import qualified Network.Wreq as Wreq
 import Prelude
 
 import HipBot.API
+import HipBot.Descriptor
 import HipBot.Internal.Types
 
 type OnUninstall m = OAuthId -> m ()

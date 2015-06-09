@@ -25,9 +25,10 @@ import Network.HTTP.Types
 import qualified Network.Wreq as Wreq
 import Prelude
 
+import HipBot.AbsoluteURI
 import HipBot.API
+import HipBot.Descriptor
 import HipBot.Internal.HipBot
-import HipBot.Internal.Types
 
 data OAuthError
   = MissingAccessTokenUrl Registration

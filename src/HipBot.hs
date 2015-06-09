@@ -7,12 +7,20 @@
 module HipBot
   ( HipBot
   , HipBotAPI(..)
+  , OnUninstall
+  , OAuthId
+  , RoomName
+  , RoomId
+  , RoomEvent(..)
   , newHipBot
+  , newHipBot'
   , hipBotResources
   , configResource
   , verifySignature
   , sendNotification
-  , module HipBot.Internal.Types
+  , module HipBot.AbsoluteURI
+  , module HipBot.Descriptor
+  , module HipBot.Notification
   ) where
 
 import Control.Applicative
@@ -20,13 +28,11 @@ import Control.Lens hiding ((.=))
 import Control.Monad.Catch
 import Control.Monad.Trans
 import Control.Monad.Trans.Either
-import Data.Aeson ((.=))
 import qualified Data.Aeson as A
 import Data.Bifunctor
 import qualified Data.ByteString.UTF8 as B
 import qualified Data.List as List
 import Data.Monoid
-import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import Data.Time.Clock
@@ -37,11 +43,14 @@ import qualified Network.Wreq as Wreq
 import Prelude
 import Safe
 
+import HipBot.AbsoluteURI
 import HipBot.API
+import HipBot.Descriptor
 import HipBot.Internal.HipBot
 import HipBot.Internal.OAuth
 import HipBot.Internal.Resources
 import HipBot.Internal.Types
+import HipBot.Notification
 
 data NotificationError
   = NoSuchRegistration OAuthId
@@ -59,15 +68,7 @@ sendNotification
   -> m (Maybe NotificationError)
 sendNotification bot oid room n =
   let
-    msg = case n of
-      TextNotification t -> A.object
-        [ "message_format" .= ("text" :: Text)
-        , "message" .= t
-        ]
-      HtmlNotification t -> A.object
-        [ "message_format" .= ("html" :: Text)
-        , "message" .= t
-        ]
+    msg = A.encode n
     opts tok = wreqDefaults bot
       & Wreq.header hAuthorization .~
           [("Bearer " <>) .  T.encodeUtf8 . view accessToken $ tok]

@@ -26,6 +26,8 @@ import Database.PostgreSQL.Simple.FromRow
 import Prelude
 import Safe
 
+import HipBot.AbsoluteURI
+import HipBot.Descriptor
 import HipBot.Internal.Types
 
 data HipBotAPI m = HipBotAPI

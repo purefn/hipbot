@@ -1,5 +1,5 @@
 name:               hipbot
-version:            0.4
+version:            0.5
 license:            BSD3
 license-file:       LICENSE
 author:             Richard Wallace <rwallace@atlassian.com>
@@ -32,7 +32,11 @@ library
   hs-source-dirs:   src
 
   exposed-modules:  HipBot
+                  , HipBot.AbsoluteURI
                   , HipBot.API
+                  , HipBot.Descriptor
+                  , HipBot.Notification
+                  , HipBot.Webhooks
 
   other-modules:    HipBot.Internal.HipBot
                   , HipBot.Internal.OAuth
@@ -64,6 +68,7 @@ library
                   , utf8-string                     >=0.3.1 && <1.1
                   , wai                             >=3.0 && <4
                   , wai-lens                        >=0.1 && <1
-                  , webcrank-wai                    >=0.2 && <1
+                  , webcrank                        >=0.2.2 && <1
+                  , webcrank-wai                    >=0.2.1 && <1
                   , wreq                            >=0.2 && <1
 
