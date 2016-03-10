@@ -18,7 +18,7 @@ import           HipBot.Key
 import           HipBot.Name
 
 data WebPanelLocation = HipchatSidebarRight
-  deriving Show
+  deriving (Eq, Show)
 
 instance ToJSON WebPanelLocation where
   toJSON HipchatSidebarRight = "hipchat.sidebar.right"

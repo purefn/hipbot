@@ -14,7 +14,7 @@ import qualified Data.Text    as T
 
 newtype Key = Key
   { unKey :: Text
-  } deriving Show
+  } deriving (Eq, Show)
 
 key :: Prism' Text Key
 key = prism' enc dec

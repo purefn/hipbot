@@ -7,7 +7,7 @@ module HipBot.Name where
 import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.Monoid
-import           Data.Text   (Text)
+import           Data.Text        (Text)
 
 data Name = Name
   { nameI18n  :: Maybe Text -- ^ The optional localization key, used to look up the localized value. Valid length range: 1 - 40.

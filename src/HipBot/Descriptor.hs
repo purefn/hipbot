@@ -23,8 +23,10 @@ import           Data.Time.Clock
 import           Prelude
 
 import           HipBot.AbsoluteURI
-import           HipBot.Internal.Types
 import           HipBot.Dialog
+import           HipBot.Glance
+import           HipBot.Internal.Types
+import           HipBot.WebPanel
 
 data AddOn = AddOn
   { _addOnKey :: Text
@@ -65,16 +67,18 @@ data Capabilities = Capabilities
   } deriving (Show, Eq)
 
 defaultCapabilities :: Capabilities
-defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing []
+defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing [] [] []
 
 instance A.ToJSON Capabilities where
-  toJSON (Capabilities is con o hs cfg dlg) = A.object $ catMaybes
+  toJSON (Capabilities is con o hs cfg dlg wp gl) = A.object $ catMaybes
     [ ("installable" .=) <$> is
     , ("hipchatApiConsumer" .=) <$> con
     , ("oauth2Provider" .=) <$> o
     , ("webhook" .= hs) <$ listToMaybe hs
     , ("configurable" .=) <$> cfg
     , ("dialog" .= dlg) <$ listToMaybe dlg -- TODO: port to Data.List.NonEmpty.nonEmpty
+    , ("webpanel" .= wp) <$ listToMaybe wp
+    , ("glance" .= gl) <$ listToMaybe gl
     ]
 
 instance A.FromJSON Capabilities where
