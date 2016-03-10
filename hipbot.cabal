@@ -35,9 +35,12 @@ library
                   , HipBot.AbsoluteURI
                   , HipBot.API
                   , HipBot.Descriptor
+                  , HipBot.Icon
+                  , HipBot.Key
+                  , HipBot.Name
                   , HipBot.Notification
                   , HipBot.Webhooks
-
+                  , HipBot.Glance
   other-modules:    HipBot.Internal.HipBot
                   , HipBot.Internal.OAuth
                   , HipBot.Internal.Resources

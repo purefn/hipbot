@@ -53,24 +53,34 @@ defaultLinks
 defaultLinks s = Links s Nothing
 
 data Capabilities = Capabilities
-  { _capabilitiesInstallable :: Maybe Installable
+  { _capabilitiesInstallable        :: Maybe Installable
   , _capabilitiesHipchatApiConsumer :: Maybe APIConsumer
-  , _capabilitiesOauth2Provider :: Maybe OAuth2Provider
-  , _capabilitiesWebhooks :: [Webhook]
-  , _capabilitiesConfigurable :: Maybe Configurable
+  , _capabilitiesOauth2Provider     :: Maybe OAuth2Provider
+  , _capabilitiesWebhooks           :: [Webhook]
+  , _capabilitiesConfigurable       :: Maybe Configurable
+  , _capabilitiesDialog             :: [Dialog]
+  , _capabilitiesWebPanel           :: [WebPanel]
+  , _capabilitiesGlance             :: [Glance]
   } deriving (Show, Eq)
 
 defaultCapabilities :: Capabilities
-defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing
+defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing [] [] []
 
 instance A.ToJSON Capabilities where
-  toJSON (Capabilities is con o hs cfg) = A.object $ catMaybes
+  toJSON (Capabilities is con o hs cfg dlg wp gl) = A.object $ catMaybes
     [ ("installable" .=) <$> is
     , ("hipchatApiConsumer" .=) <$> con
     , ("oauth2Provider" .=) <$> o
-    , ("webhook" .= hs) <$ listToMaybe hs
+    , ("webhook" .=) <$> excludeEmptyList hs
     , ("configurable" .=) <$> cfg
+    , ("dialog" .=) <$> excludeEmptyList dlg
+    , ("webpanel" .=) <$> excludeEmptyList wp
+    , ("glance" .=) <$> excludeEmptyList gl
     ]
+
+excludeEmptyList :: [a] -> Maybe [a]
+excludeEmptyList [] = Nothing
+excludeEmptyList xs = Just xs
 
 instance A.FromJSON Capabilities where
   parseJSON = A.withObject "object" $ \o -> Capabilities
@@ -79,6 +89,9 @@ instance A.FromJSON Capabilities where
     <*> o .:? "oauth2Provider"
     <*> o .:? "webhooks" .!= []
     <*> o .:? "configurable"
+    <*> o .:? "dialog" .!= []
+    <*> o .:? "webpanel" .!= []
+    <*> o .:? "glance" .!= []
 
 data Installable = Installable
   { _installableCallbackUrl :: Maybe AbsoluteURI
@@ -194,6 +207,7 @@ makeFields ''Configurable
 makeFields ''Registration
 makeFields ''AccessToken
 makeFields ''Webhook
+makeFields ''Glance
 
 $(A.deriveJSON
   A.defaultOptions
