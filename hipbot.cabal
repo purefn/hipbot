@@ -35,13 +35,15 @@ library
                   , HipBot.AbsoluteURI
                   , HipBot.API
                   , HipBot.Descriptor
+                  , HipBot.Dialog
+                  , HipBot.Glance
                   , HipBot.Icon
                   , HipBot.Key
                   , HipBot.Name
                   , HipBot.Notification
                   , HipBot.Card
                   , HipBot.Webhooks
-                  , HipBot.Glance
+                  , HipBot.WebPanel
   other-modules:    HipBot.Internal.HipBot
                   , HipBot.Internal.OAuth
                   , HipBot.Internal.Resources
