@@ -8,22 +8,23 @@
 
 module HipBot.Descriptor where
 
-import Control.Applicative
-import Control.Lens.TH
-import Data.Aeson ((.=), (.:?), (.!=))
-import qualified Data.Aeson as A
-import qualified Data.Aeson.TH as A
-import Data.Char
-import Data.Maybe
-import Data.Monoid
-import Data.String
-import Data.Text (Text)
-import qualified Data.Text as T
-import Data.Time.Clock
-import Prelude
+import           Control.Applicative
+import           Control.Lens.TH
+import           Data.Aeson            ((.!=), (.:?), (.=))
+import qualified Data.Aeson            as A
+import qualified Data.Aeson.TH         as A
+import           Data.Char
+import           Data.Maybe
+import           Data.Monoid
+import           Data.String
+import           Data.Text             (Text)
+import qualified Data.Text             as T
+import           Data.Time.Clock
+import           Prelude
 
-import HipBot.AbsoluteURI
-import HipBot.Internal.Types
+import           HipBot.AbsoluteURI
+import           HipBot.Internal.Types
+import           HipBot.Dialog
 
 data AddOn = AddOn
   { _addOnKey :: Text
@@ -64,23 +65,17 @@ data Capabilities = Capabilities
   } deriving (Show, Eq)
 
 defaultCapabilities :: Capabilities
-defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing [] [] []
+defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing []
 
 instance A.ToJSON Capabilities where
-  toJSON (Capabilities is con o hs cfg dlg wp gl) = A.object $ catMaybes
+  toJSON (Capabilities is con o hs cfg dlg) = A.object $ catMaybes
     [ ("installable" .=) <$> is
     , ("hipchatApiConsumer" .=) <$> con
     , ("oauth2Provider" .=) <$> o
-    , ("webhook" .=) <$> excludeEmptyList hs
+    , ("webhook" .= hs) <$ listToMaybe hs
     , ("configurable" .=) <$> cfg
-    , ("dialog" .=) <$> excludeEmptyList dlg
-    , ("webpanel" .=) <$> excludeEmptyList wp
-    , ("glance" .=) <$> excludeEmptyList gl
+    , ("dialog" .= dlg) <$ listToMaybe dlg -- TODO: port to Data.List.NonEmpty.nonEmpty
     ]
-
-excludeEmptyList :: [a] -> Maybe [a]
-excludeEmptyList [] = Nothing
-excludeEmptyList xs = Just xs
 
 instance A.FromJSON Capabilities where
   parseJSON = A.withObject "object" $ \o -> Capabilities

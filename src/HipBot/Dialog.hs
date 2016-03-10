@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE LambdaCase #-}
@@ -22,7 +23,7 @@ data Dialog = Dialog {
   _dialogTitle :: Name,
   _dialogUrl :: AbsoluteURI,
   _dialogOptions :: Maybe DialogOptions
-} deriving (Show, Generic)
+} deriving (Show, Eq, Generic)
 
 defaultDialog :: Text -> Text -> AbsoluteURI -> Dialog
 defaultDialog k t u = Dialog k t u Nothing
@@ -36,12 +37,25 @@ instance ToJSON Dialog where
     omitNothingFields = True
   }
 
+instance FromJSON Dialog where
+  parseJSON = genericParseJSON defaultOptions {
+    fieldLabelModifier = trailingFieldName 7,
+    omitNothingFields = True
+  }
+
 data DialogStyle = Normal | Warning
-  deriving Show
+  deriving (Show, Eq)
 
 instance ToJSON DialogStyle where
   toJSON Normal = "normal"
   toJSON Warning = "warning"
+
+instance FromJSON DialogStyle where
+  parseJSON (String text) = case text of
+    "normal" -> return Normal
+    "warning" -> return Warning
+    _ -> fail ("Unexpected style string: " ++ (show text))
+  parseJSON x = typeMismatch "Invalid style" x
 
 data DialogOptions = DialogOptions {
   _dialogOptionsStyle :: Maybe Normal,
@@ -54,6 +68,12 @@ data DialogOptions = DialogOptions {
 
 instance ToJSON DialogOptions where
   toJSON = genericToJSON defaultOptions {
+    fieldLabelModifier = trailingFieldName 14,
+    omitNothingFields = True
+  }
+
+instance FromJSON DialogOptions where
+  parseJSON = genericParseJSON defaultOptions {
     fieldLabelModifier = trailingFieldName 14,
     omitNothingFields = True
   }
@@ -73,6 +93,12 @@ instance ToJSON DialogAction where
     omitNothingFields = True
   }
 
+instance FromJSON DialogAction where
+  parseJSON = genericParseJSON defaultOptions {
+    fieldLabelModifier = trailingFieldName 13,
+    omitNothingFields = True
+  }
+
 data DialogSize = DialogSize {
   _dialogSizeHeight :: Text, -- Either 'px' or '%'
   _dialogSizeWidth  :: Text -- Either 'px' or '%'
@@ -84,12 +110,24 @@ instance ToJSON DialogSize where
     omitNothingFields = True
   }
 
+instance FromJSON DialogSize where
+  parseJSON = genericParseJSON defaultOptions {
+    fieldLabelModifier = trailingFieldName 11,
+    omitNothingFields = True
+  }
+
 data DialogFilter = DialogFilter {
   _dialogFilterPlaceholder  :: Name
-} deriving (Show, Generic)
+} deriving (Show, Eq, Generic)
 
 instance ToJSON DialogFilter where
   toJSON = genericToJSON defaultOptions {
+    fieldLabelModifier = trailingFieldName 13,
+    omitNothingFields = True
+  }
+
+instance FromJSON DialogFilter where
+  parseJSON = genericParseJSON defaultOptions {
     fieldLabelModifier = trailingFieldName 13,
     omitNothingFields = True
   }
