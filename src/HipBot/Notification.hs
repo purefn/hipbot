@@ -15,6 +15,7 @@ import Data.Monoid
 import Data.Text (Text)
 import Data.Typeable
 import Prelude
+import HipBot.Card
 
 data NotificationColor
   = Yellow
@@ -42,6 +43,7 @@ data NotificationMessage
 data Notification = Notification
   { _notificationColor :: Maybe NotificationColor
   , _notificationNotify :: Bool
+  , _notificationCard :: Maybe Card
   , _notificationMessage :: NotificationMessage
   } deriving (Show, Eq, Typeable)
 
@@ -58,16 +60,18 @@ instance A.ToJSON Notification where
         TextNotification t ->
           [ "message_format" .= ("text" :: Text)
           , "message" .= t
+          , "card" .= (n ^. card)
           ]
         HtmlNotification t ->
           [ "message_format" .= ("html" :: Text)
           , "message" .= t
+          , "card" .= (n ^. card)
           ]
     in
       A.object (c <> nu <> m)
 
 defaultNotification :: NotificationMessage -> Notification
-defaultNotification = Notification Nothing False
+defaultNotification = Notification Nothing False Nothing
 
 textNotification :: Text -> Notification
 textNotification = defaultNotification . TextNotification
@@ -75,3 +79,5 @@ textNotification = defaultNotification . TextNotification
 htmlNotification :: Text -> Notification
 htmlNotification = defaultNotification . HtmlNotification
 
+cardNotification :: Text -> Text -> Notification
+cardNotification title' msg = textNotification msg & card .~ (Just $ cardWithDescription title' msg)

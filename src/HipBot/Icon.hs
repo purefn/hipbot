@@ -20,7 +20,7 @@ instance ToJSON CompoundIcon where
 data Icon = Icon
   { iconUrl   :: AbsoluteURI -- ^ Url for the icon.
   , iconUrl2x :: AbsoluteURI -- ^ Url for the retina version of the icon.
-  } deriving Show
+  } deriving (Show, Eq)
 
 instance ToJSON Icon where
   toJSON (Icon url url2x) = object
