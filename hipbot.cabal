@@ -35,9 +35,15 @@ library
                   , HipBot.AbsoluteURI
                   , HipBot.API
                   , HipBot.Descriptor
+                  , HipBot.Dialog
+                  , HipBot.Glance
+                  , HipBot.Icon
+                  , HipBot.Key
+                  , HipBot.Name
                   , HipBot.Notification
+                  , HipBot.Card
                   , HipBot.Webhooks
-
+                  , HipBot.WebPanel
   other-modules:    HipBot.Internal.HipBot
                   , HipBot.Internal.OAuth
                   , HipBot.Internal.Resources
@@ -52,7 +58,7 @@ library
                   , exceptions                      >=0.1.1 && <1
                   , http-client                     >=0.4.6 && <1
                   , http-client-tls                 >=0.2 && <1
-                  , http-types                      >=0.8.0 && <0.9
+                  , http-types                      >=0.8.0 && <0.10
                   , jwt                             >=0.5 && <1
                   , lens                            >=4.5 && <5
                   , mtl                             >=2.0.1 && <2.3
